@@ -9,10 +9,11 @@
     "postinstall": "remix setup node",
     "start": "remix-serve build",
     "lint": "eslint --ignore-path .gitignore .",
+    "check-types": "tsc",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|json|ts|tsx)\"",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
-    "validate": "npm run check-format && npm run lint && npm run build"
+    "validate": "npm run check-types && npm run check-format && npm run lint && npm run build"
   },
   "dependencies": {
     "@remix-run/react": "^1.1.3",
