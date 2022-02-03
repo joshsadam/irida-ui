@@ -1,4 +1,5 @@
 import { Form } from 'remix';
+import { Alert } from '@mui/material';
 
 type LoginProps = {
   errors?: boolean;
@@ -8,11 +9,7 @@ type LoginProps = {
 export default function Login({ errors, busy }: LoginProps) {
   return (
     <Form method="post">
-      {errors && (
-        <div style={{ background: 'red', color: 'white', padding: `10px` }}>
-          ❌ You screwed up your login!
-        </div>
-      )}
+      {errors && <Alert severity="error">You screwed up your login!</Alert>}
       <div>
         <label htmlFor="username">Username</label>
         <input type="text" name="username" required />
