@@ -3,7 +3,6 @@ import { gql } from '@apollo/client';
 import {
   ActionFunction,
   Form,
-  Link,
   LoaderFunction,
   MetaFunction,
   redirect,
@@ -15,6 +14,10 @@ import { Project } from '../../../../types';
 import { authenticator } from '../../../../services/auth';
 import client from '../../../../services/apollo-client';
 import { formatTimeStamp } from '../../../../utils/date-utils';
+import { DataGrid } from '@mui/x-data-grid';
+import Title from '~/components/Title';
+import Box from '@mui/material/Box';
+import { Button, Grid, TextField } from '@mui/material';
 
 const ALL_PROJECTS_QUERY = gql`
   query ALL_PROJECTS_QUERY {
@@ -111,40 +114,85 @@ export default function Projects() {
     }
   }, [isCreating]);
 
+  const columns = [
+    {
+      field: 'name',
+      headerName: 'Name',
+      width: 150,
+    },
+    {
+      field: 'projectDescription',
+      headerName: 'Description',
+      width: 300,
+    },
+    {
+      field: 'createdDate',
+      headerName: 'Created',
+      width: 200,
+      valueGetter: (params) => formatTimeStamp(params.createdDate),
+    },
+  ];
+
   return (
     <main>
-      <h1>PROJECTS</h1>
-      <table>
-        <tbody>
-          {projects.map((project) => (
-            <tr key={project.id}>
-              <td>
-                <Link to={`/projects/${project.id}`}>{project.name}</Link>
-              </td>
-              <td>{project.projectDescription}</td>
-              <td>{formatTimeStamp(new Date(project.createdDate))}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Title>PROJECTS</Title>
+
+      <div style={{ height: 600, width: '100%' }}>
+        <DataGrid
+          rows={projects}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+        />
+      </div>
 
       <br />
       <hr />
       <br />
 
-      <Form ref={formRef} replace method="post">
-        <label htmlFor="name">
-          Project Name
-          <input type="text" name="name" />
-        </label>
-        <label htmlFor="description">
-          Project Description
-          <input type="text" name="description" />
-        </label>
-        <button type="submit" name="_action" value="create">
-          Create Project
-        </button>
-      </Form>
+      <Box
+        component={Form}
+        ref={formRef}
+        method="post"
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              name="name"
+              required
+              fullWidth
+              id="name"
+              label="Project Name"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              fullWidth
+              id="description"
+              label="Project Description"
+              name="description"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              name="_action"
+              value="create"
+            >
+              Create Project
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
     </main>
   );
 }

@@ -1,3 +1,5 @@
+import Title from '~/components/Title';
+
 export default function Index() {
-  return <h1>Dashboard: Need to decide if we still want this</h1>;
+  return <Title>Dashboard: Are we keeping this page?</Title>;
 }
