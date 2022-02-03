@@ -25,18 +25,20 @@ authenticator.use(
   new FormStrategy(async ({ form }) => {
     const username = form.get('username');
     const password = form.get('password');
-    console.log({ options });
-    const client = new ResourceOwnerPassword(options);
+    if (typeof username === 'string' && typeof password === 'string') {
+      const client = new ResourceOwnerPassword(options);
 
-    const tokenConfig: PasswordTokenConfig = {
-      username,
-      password,
-      scope: `read write`,
-    };
+      const tokenConfig: PasswordTokenConfig = {
+        username,
+        password,
+        scope: `read write`,
+      };
 
-    const { token } = await client.getToken(tokenConfig);
-    console.log({ token });
+      const { token } = await client.getToken(tokenConfig);
+      console.log({ token });
 
-    return token;
+      return token;
+    }
+    throw new Error('Bad username and password');
   }),
 );

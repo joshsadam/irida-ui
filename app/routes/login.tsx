@@ -11,9 +11,11 @@ import type { Token } from 'simple-oauth2';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const token: Token | null = await authenticator.isAuthenticated(request);
+
   if (token && new Date(token.expires_at) > new Date()) {
     return redirect('/');
   }
+
   return {};
 };
 
