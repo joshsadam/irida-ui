@@ -16,6 +16,8 @@ export const VIEWER_QUERY = gql`
     viewer {
       id
       username
+      firstName
+      lastName
     }
   }
 `;
