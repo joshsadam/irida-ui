@@ -68,8 +68,8 @@ export default function Dashboard({ viewer, children }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(null);
   };
 
   return (
@@ -128,6 +128,7 @@ export default function Dashboard({ viewer, children }) {
                   horizontal: 'right',
                 }}
                 open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
               >
                 <Form action="/logout" method="post">
                   <MenuItem component={Button} type="submit">

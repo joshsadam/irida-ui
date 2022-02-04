@@ -17,7 +17,7 @@ import { formatTimeStamp } from '../../../../utils/date-utils';
 import { DataGrid } from '@mui/x-data-grid';
 import Title from '~/components/Title';
 import Box from '@mui/material/Box';
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Container, Grid, Paper, TextField } from '@mui/material';
 
 const ALL_PROJECTS_QUERY = gql`
   query ALL_PROJECTS_QUERY {
@@ -134,65 +134,68 @@ export default function Projects() {
   ];
 
   return (
-    <main>
+    <Container>
       <Title>PROJECTS</Title>
-
-      <div style={{ height: 600, width: '100%' }}>
-        <DataGrid
-          rows={projects}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-        />
-      </div>
-
-      <br />
-      <hr />
-      <br />
-
-      <Box
-        component={Form}
-        ref={formRef}
-        method="post"
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              name="name"
-              required
-              fullWidth
-              id="name"
-              label="Project Name"
+      <Paper>
+        <Box p={2}>
+          <div style={{ height: 600, width: '100%' }}>
+            <DataGrid
+              rows={projects}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
             />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              fullWidth
-              id="description"
-              label="Project Description"
-              name="description"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              name="_action"
-              value="create"
-            >
-              Create Project
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-    </main>
+          </div>
+
+          <br />
+          <hr />
+          <br />
+
+          <Box
+            component={Form}
+            ref={formRef}
+            method="post"
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  name="name"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Project Name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  fullWidth
+                  id="description"
+                  label="Project Description"
+                  name="description"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  name="_action"
+                  value="create"
+                >
+                  Create Project
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 }

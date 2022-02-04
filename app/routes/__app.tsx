@@ -51,20 +51,6 @@ export default function AppLayout() {
   const viewer = useLoaderData();
   return (
     <Dashboard viewer={viewer}>
-      {/*<div*/}
-      {/*  style={{*/}
-      {/*    display: 'flex',*/}
-      {/*    flexDirection: 'row',*/}
-      {/*    justifyContent: 'space-between',*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <div>*/}
-      {/*    <Link to="/">Dashboard</Link> <Link to="/projects">Projects</Link>*/}
-      {/*  </div>*/}
-      {/*  <Form action="/logout" method="post">*/}
-      {/*    <button>Logout: {viewer.username}</button>*/}
-      {/*  </Form>*/}
-      {/*</div>*/}
       <Outlet />
     </Dashboard>
   );
