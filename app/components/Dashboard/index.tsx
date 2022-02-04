@@ -23,7 +23,7 @@ import FolderOpenTwoTone from '@mui/icons-material/FolderOpenTwoTone';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import DashboardTwoTone from '@mui/icons-material/DashboardTwoTone';
-import { Form, Link } from 'remix';
+import { Form, Link, useLocation } from 'remix';
 import { Button, Menu, MenuItem } from '@mui/material';
 
 export const DRAWER_WIDTH = 240;
@@ -56,6 +56,7 @@ export const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Dashboard({ viewer, children }) {
+  const location = useLocation();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -155,13 +156,21 @@ export default function Dashboard({ viewer, children }) {
           <Divider />
           <nav aria-label="main dashboard projects">
             <List>
-              <ListItemButton component={Link} to="/">
+              <ListItemButton
+                component={Link}
+                to="/"
+                selected={location.pathname === '/'}
+              >
                 <ListItemIcon>
                   <DashboardTwoTone />
                 </ListItemIcon>
                 <ListItemText>Dashboard</ListItemText>
               </ListItemButton>
-              <ListItemButton component={Link} to="/projects">
+              <ListItemButton
+                component={Link}
+                to="/projects"
+                selected={location.pathname === '/projects'}
+              >
                 <ListItemIcon>
                   <FolderOpenTwoTone />
                 </ListItemIcon>
