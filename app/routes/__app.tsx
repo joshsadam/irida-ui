@@ -9,6 +9,7 @@ import {
 } from 'remix';
 import { authenticator } from '../../services/auth';
 import client from '../../services/apollo-client';
+import Dashboard from '~/components/Dashboard';
 
 export const VIEWER_QUERY = gql`
   query VIEWER_QUERY {
@@ -47,22 +48,22 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function AppLayout() {
   const viewer = useLoaderData();
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
-        <div>
-          <Link to="/">Dashboard</Link> <Link to="/projects">Projects</Link>
-        </div>
-        <Form action="/logout" method="post">
-          <button>Logout: {viewer.username}</button>
-        </Form>
-      </div>
+    <Dashboard viewer={viewer}>
+      {/*<div*/}
+      {/*  style={{*/}
+      {/*    display: 'flex',*/}
+      {/*    flexDirection: 'row',*/}
+      {/*    justifyContent: 'space-between',*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <div>*/}
+      {/*    <Link to="/">Dashboard</Link> <Link to="/projects">Projects</Link>*/}
+      {/*  </div>*/}
+      {/*  <Form action="/logout" method="post">*/}
+      {/*    <button>Logout: {viewer.username}</button>*/}
+      {/*  </Form>*/}
+      {/*</div>*/}
       <Outlet />
-    </div>
+    </Dashboard>
   );
 }
