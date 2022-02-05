@@ -149,7 +149,7 @@ export default function Dashboard({ viewer, children }) {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            <IconButton onClick={toggleDrawer} aria-label="Collapse sidebar">
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
