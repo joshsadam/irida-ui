@@ -73,9 +73,7 @@ const Document = withEmotionCache(
 export default function App() {
   return (
     <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
+      <Outlet />
     </Document>
   );
 }

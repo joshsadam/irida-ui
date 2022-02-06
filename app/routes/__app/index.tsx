@@ -1,5 +1,7 @@
-import { Container, Paper, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import Title from '~/components/Title';
 
 export default function Index() {

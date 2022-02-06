@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { AppBar } from '~/components/Dashboard/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,7 +14,6 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
-import { deepPurple } from '@mui/material/colors';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -24,10 +22,9 @@ import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import DashboardTwoTone from '@mui/icons-material/DashboardTwoTone';
 import { Form, Link, useLocation } from 'remix';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Button, Menu, MenuItem, useTheme } from '@mui/material';
 
 export const DRAWER_WIDTH = 240;
-const mdTheme = createTheme();
 
 export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -56,6 +53,7 @@ export const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Dashboard({ viewer, children }) {
+  const theme = useTheme();
   const location = useLocation();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
@@ -69,134 +67,136 @@ export default function Dashboard({ viewer, children }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
   return (
-    <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Dashboard
-            </Typography>
-            <Stack direction="row" spacing={2}>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton onClick={handleOpenUserMenu}>
-                <Avatar sx={{ bgcolor: deepPurple[500] }}>
-                  {`${viewer.firstName.charAt(0)}${viewer.lastName.charAt(0)}`}
-                </Avatar>
-              </IconButton>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="user-menu"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <Form action="/logout" method="post">
-                  <MenuItem component={Button} type="submit">
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                </Form>
-              </Menu>
-            </Stack>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer} aria-label="Collapse sidebar">
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <nav aria-label="main dashboard projects">
-            <List>
-              <ListItemButton
-                component={Link}
-                to="/"
-                selected={location.pathname === '/'}
-              >
-                <ListItemIcon>
-                  <DashboardTwoTone />
-                </ListItemIcon>
-                <ListItemText>Dashboard</ListItemText>
-              </ListItemButton>
-              <ListItemButton
-                component={Link}
-                to="/projects"
-                selected={location.pathname === '/projects'}
-              >
-                <ListItemIcon>
-                  <FolderOpenTwoTone />
-                </ListItemIcon>
-                <ListItemText>Projects</ListItemText>
-              </ListItemButton>
-            </List>
-          </nav>
-        </Drawer>
-        <Box
-          component="main"
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="absolute" open={open}>
+        <Toolbar
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
+            pr: '24px', // keep right padding when drawer closed
           }}
         >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            {children}
-          </Container>
-        </Box>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer}
+            sx={{
+              marginRight: '36px',
+              ...(open && { display: 'none' }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 1 }}
+          >
+            Dashboard
+          </Typography>
+          <Stack direction="row" spacing={2}>
+            <IconButton color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton onClick={handleOpenUserMenu}>
+              <Avatar sx={{ bgcolor: theme.palette.secondary.dark }}>
+                {`${viewer.firstName.charAt(0)}${viewer.lastName.charAt(0)}`}
+              </Avatar>
+            </IconButton>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="user-menu"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <Form action="/logout" method="post">
+                <MenuItem component={Button} type="submit">
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              </Form>
+            </Menu>
+          </Stack>
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent" open={open}>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            px: [1],
+          }}
+        >
+          <IconButton onClick={toggleDrawer} aria-label="Collapse sidebar">
+            <ChevronLeftIcon />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <nav aria-label="main dashboard projects">
+          <List>
+            <ListItemButton
+              component={Link}
+              to="/"
+              selected={location.pathname === '/'}
+            >
+              <ListItemIcon>
+                <DashboardTwoTone
+                  style={{ color: theme.palette.primary.main }}
+                />
+              </ListItemIcon>
+              <ListItemText>Dashboard</ListItemText>
+            </ListItemButton>
+            <ListItemButton
+              component={Link}
+              to="/projects"
+              selected={location.pathname === '/projects'}
+            >
+              <ListItemIcon>
+                <FolderOpenTwoTone
+                  style={{ color: theme.palette.primary.main }}
+                />
+              </ListItemIcon>
+              <ListItemText>Projects</ListItemText>
+            </ListItemButton>
+          </List>
+        </nav>
+      </Drawer>
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          {children}
+        </Container>
       </Box>
-    </ThemeProvider>
+    </Box>
   );
 }
