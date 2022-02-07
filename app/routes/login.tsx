@@ -1,15 +1,3 @@
-import {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-  useTransition,
-} from 'remix';
-import { Form, json, redirect, useActionData } from 'remix';
-import { AuthorizationError } from 'remix-auth';
-import { authenticator } from '../../services/auth';
-import type { Token } from 'simple-oauth2';
-import Login from '~/components/Login';
-
 export const loader: LoaderFunction = async ({ request }) => {
   const token: Token | null = await authenticator.isAuthenticated(request);
 

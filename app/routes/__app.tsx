@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
-import { LoaderFunction, Outlet, redirect, useLoaderData } from 'remix';
-import { authenticator } from '../../services/auth';
-import client from '../../services/apollo-client';
-import Dashboard from '~/components/Dashboard';
 import { ThemeProvider } from '@mui/material';
+import { LoaderFunction, Outlet, redirect, useLoaderData } from 'remix';
+import Dashboard from '~/components/Dashboard';
+import client from '~/services/apollo-client';
+import { authenticator } from '~/services/auth';
 import theme from '~/src/theme';
 
 export const VIEWER_QUERY = gql`

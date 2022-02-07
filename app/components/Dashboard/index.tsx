@@ -1,30 +1,54 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { AppBar } from '~/components/Dashboard/AppBar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
-import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import DashboardTwoTone from '@mui/icons-material/DashboardTwoTone';
+import FolderOpenTwoTone from '@mui/icons-material/FolderOpenTwoTone';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import MuiDrawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import FolderOpenTwoTone from '@mui/icons-material/FolderOpenTwoTone';
-import { styled } from '@mui/material/styles';
-import MuiDrawer from '@mui/material/Drawer';
-import DashboardTwoTone from '@mui/icons-material/DashboardTwoTone';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+import { styled, useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import { Form, Link, useLocation } from 'remix';
-import { Button, Menu, MenuItem, useTheme } from '@mui/material';
 
-export const DRAWER_WIDTH = 240;
+const DRAWER_WIDTH = 240;
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+export const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: DRAWER_WIDTH,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
 export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',

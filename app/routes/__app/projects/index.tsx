@@ -1,24 +1,21 @@
-import { useEffect, useRef } from 'react';
 import { gql } from '@apollo/client';
+import { Button, Container, Paper, Stack } from '@mui/material';
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
 import {
-  ActionFunction,
-  Form,
   Link,
   LoaderFunction,
   MetaFunction,
   redirect,
   useLoaderData,
-  useTransition,
+  useNavigate,
 } from 'remix';
 import { Token } from 'simple-oauth2';
-import { Project } from '../../../../types';
-import { authenticator } from '../../../../services/auth';
-import client from '../../../../services/apollo-client';
-import { formatTimeStamp } from '../../../../utils/date-utils';
-import { DataGrid } from '@mui/x-data-grid';
 import Title from '~/components/Title';
-import Box from '@mui/material/Box';
-import { Button, Container, Grid, Paper, TextField } from '@mui/material';
+import client from '~/services/apollo-client';
+import { authenticator } from '~/services/auth';
+import { Project } from '~/types';
+import { formatTimeStamp } from '~/utils/date-utils';
 
 const ALL_PROJECTS_QUERY = gql`
   query ALL_PROJECTS_QUERY {
@@ -30,14 +27,6 @@ const ALL_PROJECTS_QUERY = gql`
         modifiedDate
         projectDescription
       }
-    }
-  }
-`;
-
-const CREATE_PROJECT_MUTATION = gql`
-  mutation CREATE_PROJECT_MUTATION($project: ProjectInput) {
-    createProject(input: $project) {
-      id
     }
   }
 `;
@@ -66,33 +55,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   return response.data.viewer.projects;
 };
 
-export const action: ActionFunction = async ({ request }) => {
-  const token: Token | null = await authenticator.isAuthenticated(request);
-  if (token === null) {
-    return redirect('/login');
-  }
-  const formData = await request.formData();
-  const { _action, ...values } = Object.fromEntries(formData);
-
-  if (_action === 'create') {
-    await client.mutate({
-      mutation: CREATE_PROJECT_MUTATION,
-      variables: {
-        project: {
-          name: values.name,
-          projectDescription: values.description,
-        },
-      },
-      context: {
-        headers: {
-          Authorization: `Bearer ${token.access_token}`,
-        },
-      },
-    });
-  }
-  return {};
-};
-
 export const meta: MetaFunction = () => {
   return {
     title: 'IRIDA REMIXED: Projects',
@@ -101,19 +63,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Projects() {
+  const navigate = useNavigate();
   const projects = useLoaderData<Project[]>();
-  const transition = useTransition();
-  const formRef = useRef();
-
-  const isCreating =
-    transition.state === 'submitting' &&
-    transition.submission.formData.get('_action') === 'create';
-
-  useEffect(() => {
-    if (!isCreating) {
-      formRef.current?.reset();
-    }
-  }, [isCreating]);
 
   const columns = [
     {
@@ -139,7 +90,17 @@ export default function Projects() {
 
   return (
     <Container>
-      <Title>PROJECTS</Title>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ pb: 1 }}
+      >
+        <Title>PROJECTS</Title>
+        <Button variant="outlined" onClick={() => navigate('/projects/create')}>
+          Create New Project
+        </Button>
+      </Stack>
       <Paper>
         <Box sx={{ p: 2, height: '800px' }}>
           <div style={{ display: 'flex', height: '100%' }}>
@@ -152,53 +113,6 @@ export default function Projects() {
               />
             </div>
           </div>
-        </Box>
-
-        <Box>
-          <Box
-            component={Form}
-            ref={formRef}
-            method="post"
-            sx={{
-              p: 2,
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Project Name"
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  fullWidth
-                  id="description"
-                  label="Project Description"
-                  name="description"
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  name="_action"
-                  value="create"
-                >
-                  Create Project
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
         </Box>
       </Paper>
     </Container>

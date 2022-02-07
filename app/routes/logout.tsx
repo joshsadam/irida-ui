@@ -1,6 +1,6 @@
-import type { ActionFunction, LoaderFunction } from 'remix';
+import type { ActionFunction } from 'remix';
 import { redirect } from 'remix';
-import { destroySession, getSession } from '../../services/session.server';
+import { destroySession, getSession } from '~/services/session.server';
 
 export const action: ActionFunction = async ({ request }) => {
   console.log('REDIRECTING');

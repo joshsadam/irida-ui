@@ -1,11 +1,11 @@
-import { redirect, useLoaderData, useParams } from 'remix';
-import type { LoaderFunction } from 'remix';
-import Title from '~/components/Title';
-import type { Token } from 'simple-oauth2';
-import type { Project } from 'types';
-import { authenticator } from '../../../../services/auth';
-import client from '../../../../services/apollo-client';
 import { gql } from '@apollo/client';
+import type { LoaderFunction } from 'remix';
+import { redirect, useLoaderData, useParams } from 'remix';
+import type { Token } from 'simple-oauth2';
+import Title from '~/components/Title';
+import client from '~/services/apollo-client';
+import { authenticator } from '~/services/auth';
+import type { Project } from '~/types';
 
 interface GraphqlResponse {
   data: {
