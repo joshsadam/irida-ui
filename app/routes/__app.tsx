@@ -25,6 +25,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const token = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login',
   });
+  console.log(token);
 
   if (!token || new Date(token.expires_at) < new Date()) {
     return redirect('/login');

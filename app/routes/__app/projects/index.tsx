@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 import {
   ActionFunction,
   Form,
+  Link,
   LoaderFunction,
   MetaFunction,
   redirect,
@@ -119,6 +120,9 @@ export default function Projects() {
       field: 'name',
       headerName: 'Name',
       width: 150,
+      renderCell: ({ row }) => {
+        return <Link to={`/projects/${row.id}`}>{row.name}</Link>;
+      },
     },
     {
       field: 'projectDescription',
@@ -137,25 +141,26 @@ export default function Projects() {
     <Container>
       <Title>PROJECTS</Title>
       <Paper>
-        <Box p={2}>
-          <div style={{ height: 600, width: '100%' }}>
-            <DataGrid
-              rows={projects}
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10]}
-            />
+        <Box sx={{ p: 2, height: '800px' }}>
+          <div style={{ display: 'flex', height: '100%' }}>
+            <div style={{ flex: 1 }}>
+              <DataGrid
+                rows={projects}
+                columns={columns}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+              />
+            </div>
           </div>
+        </Box>
 
-          <br />
-          <hr />
-          <br />
-
+        <Box>
           <Box
             component={Form}
             ref={formRef}
             method="post"
             sx={{
+              p: 2,
               marginTop: 8,
               display: 'flex',
               flexDirection: 'column',

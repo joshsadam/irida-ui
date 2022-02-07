@@ -5,13 +5,10 @@ import { purple } from '@mui/material/colors';
 const theme = createTheme({
   palette: {
     primary: {
-      dark: '#FA6900',
-      main: '#F38630',
-      light: '#E0E4CC',
+      main: '#230B00',
     },
     secondary: {
-      main: '#A7DBD8',
-      light: '#69D2E7',
+      main: '#AABE9B',
     },
   },
 });
