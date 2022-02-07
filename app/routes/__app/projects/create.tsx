@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { Box, Button, Container, Grid, Paper, TextField } from '@mui/material';
+import { Box, Button, Grid, Paper, TextField } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { ActionFunction, Form, redirect, useTransition } from 'remix';
 import { Token } from 'simple-oauth2';
@@ -57,7 +57,7 @@ export default function CreateProject() {
   }, [isCreating]);
 
   return (
-    <Container>
+    <>
       <Title>Create New Project</Title>
       <Paper>
         <Box
@@ -66,7 +66,6 @@ export default function CreateProject() {
           method="post"
           sx={{
             p: 2,
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -104,6 +103,6 @@ export default function CreateProject() {
           </Grid>
         </Box>
       </Paper>
-    </Container>
+    </>
   );
 }

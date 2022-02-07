@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
-import { Button, Container, Paper, Stack } from '@mui/material';
+import { AddOutlined } from '@mui/icons-material';
+import { Button, Paper, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import {
@@ -89,7 +90,7 @@ export default function Projects() {
   ];
 
   return (
-    <Container>
+    <>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -97,8 +98,12 @@ export default function Projects() {
         sx={{ pb: 1 }}
       >
         <Title>PROJECTS</Title>
-        <Button variant="outlined" onClick={() => navigate('/projects/create')}>
-          Create New Project
+        <Button
+          startIcon={<AddOutlined />}
+          variant="contained"
+          onClick={() => navigate('/projects/create')}
+        >
+          New
         </Button>
       </Stack>
       <Paper>
@@ -115,6 +120,6 @@ export default function Projects() {
           </div>
         </Box>
       </Paper>
-    </Container>
+    </>
   );
 }
