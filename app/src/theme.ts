@@ -1,14 +1,13 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
 
 // Create a theme instance.
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#230B00',
+      main: '#1D0B38',
     },
     secondary: {
-      main: '#AABE9B',
+      main: '#D38157',
     },
   },
 });
