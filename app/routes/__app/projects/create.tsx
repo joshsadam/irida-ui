@@ -24,7 +24,11 @@ export const action: ActionFunction = async ({ request }) => {
   const { _action, ...values } = Object.fromEntries(formData);
 
   if (_action === 'create') {
-    await client.mutate({
+    const {
+      data: {
+        createProject: { id },
+      },
+    } = await client.mutate({
       mutation: CREATE_PROJECT_MUTATION,
       variables: {
         project: {
@@ -38,6 +42,8 @@ export const action: ActionFunction = async ({ request }) => {
         },
       },
     });
+    return redirect(`/projects/${id}`);
+    // TODO: Handle error creating projects
   }
   return {};
 };

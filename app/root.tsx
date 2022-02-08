@@ -12,16 +12,41 @@ import { withEmotionCache } from '@emotion/react';
 import ClientStyleContext from '~/src/ClientStyleContext';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import Layout from '~/src/Layout';
-import theme from '~/src/theme';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 interface DocumentProps {
   children: React.ReactNode;
   title?: string;
 }
 
+export const ColorModeContext = React.createContext({
+  toggleColorMode: () => {},
+});
+
 const Document = withEmotionCache(
   ({ children, title }: DocumentProps, emotionCache) => {
     const clientStyleData = React.useContext(ClientStyleContext);
+
+    // Set up Dark and light themes
+    const [mode, setMode] = React.useState('light');
+    const colorMode = React.useMemo(
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        },
+      }),
+      [],
+    );
+
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode,
+          },
+        }),
+      [mode],
+    );
 
     useEnhancedEffect(() => {
       // re-link sheet container
@@ -58,7 +83,9 @@ const Document = withEmotionCache(
           />
         </head>
         <body>
-          {children}
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </ColorModeContext.Provider>
           <ScrollRestoration />
           <Scripts />
           {process.env.NODE_ENV === 'development' && <LiveReload />}

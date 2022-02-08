@@ -1,10 +1,8 @@
 import { gql } from '@apollo/client';
-import { ThemeProvider } from '@mui/material';
 import { LoaderFunction, Outlet, redirect, useLoaderData } from 'remix';
 import Dashboard from '~/components/Dashboard';
 import client from '~/services/apollo-client';
 import { authenticator } from '~/services/auth';
-import theme from '~/src/theme';
 
 export const VIEWER_QUERY = gql`
   query VIEWER_QUERY {
@@ -41,15 +39,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
 
   return response.data.viewer;
+  S;
 };
 
 export default function AppLayout() {
   const viewer = useLoaderData();
   return (
-    <ThemeProvider theme={theme}>
-      <Dashboard viewer={viewer}>
-        <Outlet />
-      </Dashboard>
-    </ThemeProvider>
+    <Dashboard viewer={viewer}>
+      <Outlet />
+    </Dashboard>
   );
 }
