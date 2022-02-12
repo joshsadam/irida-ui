@@ -23,11 +23,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   const token = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login',
   });
-  console.log(token);
 
   if (!token || new Date(token.expires_at) < new Date()) {
     return redirect('/login');
   }
+
+  // return { firstName: 'Josh', lastName: 'Adam' };
 
   const response = await client.query({
     query: VIEWER_QUERY,
@@ -39,7 +40,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
 
   return response.data.viewer;
-  S;
 };
 
 export default function AppLayout() {

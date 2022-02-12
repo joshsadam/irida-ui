@@ -1,3 +1,5 @@
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DashboardTwoTone from '@mui/icons-material/DashboardTwoTone';
 import FolderOpenTwoTone from '@mui/icons-material/FolderOpenTwoTone';
@@ -15,6 +17,8 @@ import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
@@ -23,10 +27,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Form, Link, useLocation } from 'remix';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { Settings } from '~/components/Settings';
 import { ColorModeContext } from '~/root';
 
 const DRAWER_WIDTH = 240;
@@ -38,7 +39,6 @@ interface AppBarProps extends MuiAppBarProps {
 export const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -87,9 +87,9 @@ export default function Dashboard({ viewer, children }) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
+  const [openMenu, setOpenMenu] = React.useState(true);
+  const toggleMenuDrawer = () => {
+    setOpenMenu(!openMenu);
   };
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -103,7 +103,7 @@ export default function Dashboard({ viewer, children }) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
+      <AppBar position="absolute" open={openMenu}>
         <Toolbar
           sx={{
             pr: '24px', // keep right padding when drawer closed
@@ -113,10 +113,10 @@ export default function Dashboard({ viewer, children }) {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={toggleDrawer}
+            onClick={toggleMenuDrawer}
             sx={{
               marginRight: '36px',
-              ...(open && { display: 'none' }),
+              ...(openMenu && { display: 'none' }),
             }}
           >
             <MenuIcon />
@@ -174,10 +174,11 @@ export default function Dashboard({ viewer, children }) {
                 </MenuItem>
               </Form>
             </Menu>
+            <Settings />
           </Stack>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={openMenu}>
         <Toolbar
           sx={{
             display: 'flex',
@@ -186,7 +187,7 @@ export default function Dashboard({ viewer, children }) {
             px: [1],
           }}
         >
-          <IconButton onClick={toggleDrawer} aria-label="Collapse sidebar">
+          <IconButton onClick={toggleMenuDrawer} aria-label="Collapse sidebar">
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
@@ -226,7 +227,7 @@ export default function Dashboard({ viewer, children }) {
           backgroundColor: (theme) =>
             theme.palette.mode === 'light'
               ? theme.palette.grey[100]
-              : theme.palette.grey[900],
+              : theme.palette.grey[800],
           flexGrow: 1,
           height: '100vh',
           overflow: 'auto',

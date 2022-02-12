@@ -1,3 +1,6 @@
+import { withEmotionCache } from '@emotion/react';
+import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
 import {
   Links,
@@ -8,11 +11,8 @@ import {
   ScrollRestoration,
   useCatch,
 } from 'remix';
-import { withEmotionCache } from '@emotion/react';
 import ClientStyleContext from '~/src/ClientStyleContext';
-import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import Layout from '~/src/Layout';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -43,6 +43,9 @@ const Document = withEmotionCache(
         createTheme({
           palette: {
             mode,
+            primary: {
+              main: '#E6781E',
+            },
           },
         }),
       [mode],
