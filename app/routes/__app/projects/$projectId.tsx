@@ -34,16 +34,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (token === null) {
     return redirect('/login');
   }
-  const response: GraphqlResponse = await client.query({
-    query: PROJECT_QUERY,
-    variables: { id: params.projectId },
-    context: {
-      headers: {
-        Authorization: `Bearer ${token.access_token}`,
-      },
-    },
-  });
-  return response.data.viewer.projects;
+  // TODO: This is not yet implemented in IRIDA
+
+  // const response: GraphqlResponse = await client.query({
+  //   query: PROJECT_QUERY,
+  //   variables: { id: params.projectId },
+  //   context: {
+  //     headers: {
+  //       Authorization: `Bearer ${token.access_token}`,
+  //     },
+  //   },
+  // });
+  // return response.data.viewer.projects;
+  return {};
 };
 
 export default function Project() {

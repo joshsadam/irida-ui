@@ -27,7 +27,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Form, Link, useLocation } from 'remix';
-import { Settings } from '~/components/Settings';
 import { ColorModeContext } from '~/root';
 
 const DRAWER_WIDTH = 240;
@@ -174,7 +173,6 @@ export default function Dashboard({ viewer, children }) {
                 </MenuItem>
               </Form>
             </Menu>
-            <Settings />
           </Stack>
         </Toolbar>
       </AppBar>
