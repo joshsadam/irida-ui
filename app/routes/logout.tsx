@@ -1,4 +1,4 @@
-import type { ActionFunction } from 'remix';
+import type { ActionFunction, LoaderFunction } from 'remix';
 import { redirect } from 'remix';
 import { destroySession, getSession } from '~/services/session.server';
 
