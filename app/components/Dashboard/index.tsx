@@ -130,7 +130,12 @@ export default function Dashboard({ viewer, children }) {
           >
             IRIDA
           </Typography>
-          <Stack direction="row" spacing={1}>
+          <Stack
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={1}
+          >
             <IconButton onClick={colorMode.toggleColorMode} color="inherit">
               {theme.palette.mode === 'dark' ? (
                 <Brightness7Icon />
