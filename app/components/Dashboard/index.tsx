@@ -35,9 +35,10 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
-export const AppBar = styled(MuiAppBar, {
+const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -127,14 +128,10 @@ export default function Dashboard({ viewer, children }) {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Dashboard
+            IRIDA
           </Typography>
-          <Stack direction="row" spacing={2}>
-            <IconButton
-              sx={{ ml: 1 }}
-              onClick={colorMode.toggleColorMode}
-              color="inherit"
-            >
+          <Stack direction="row" spacing={1}>
+            <IconButton onClick={colorMode.toggleColorMode} color="inherit">
               {theme.palette.mode === 'dark' ? (
                 <Brightness7Icon />
               ) : (
@@ -147,7 +144,7 @@ export default function Dashboard({ viewer, children }) {
               </Badge>
             </IconButton>
             <IconButton onClick={handleOpenUserMenu}>
-              <Avatar sx={{ bgcolor: theme.palette.secondary.dark }}>
+              <Avatar sx={{ bgcolor: theme.palette.secondary.light }}>
                 {`${viewer.firstName.charAt(0)}${viewer.lastName.charAt(0)}`}
               </Avatar>
             </IconButton>

@@ -20,6 +20,7 @@ interface DocumentProps {
 }
 
 export const ColorModeContext = React.createContext({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleColorMode: () => {},
 });
 
@@ -44,7 +45,10 @@ const Document = withEmotionCache(
           palette: {
             mode,
             primary: {
-              main: '#E6781E',
+              main: '#4f434f',
+            },
+            secondary: {
+              main: '#467d8c',
             },
           },
         }),

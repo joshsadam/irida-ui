@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import { AddOutlined } from '@mui/icons-material';
 import { Button, Paper, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {
   Link,
   LoaderFunction,
@@ -67,11 +67,11 @@ export default function Projects() {
   const navigate = useNavigate();
   const projects = useLoaderData<Project[]>();
 
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: 'name',
       headerName: 'Name',
-      width: 150,
+      width: 250,
       renderCell: ({ row }) => {
         return <Link to={`/projects/${row.id}`}>{row.name}</Link>;
       },
@@ -84,8 +84,9 @@ export default function Projects() {
     {
       field: 'createdDate',
       headerName: 'Created',
-      width: 200,
-      valueGetter: (params) => formatTimeStamp(params.createdDate),
+      type: 'dateTime',
+      width: 250,
+      valueGetter: ({ value }) => value && new Date(value),
     },
   ];
 
@@ -95,7 +96,8 @@ export default function Projects() {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        sx={{ pb: 1 }}
+        pb={1}
+        sx={{ height: 40 }}
       >
         <Title>PROJECTS</Title>
         <Button
@@ -109,7 +111,7 @@ export default function Projects() {
       <Paper>
         <Box sx={{ p: 2, height: '800px' }}>
           <div style={{ display: 'flex', height: '100%' }}>
-            <div style={{ flex: 1 }}>
+            <div style={{ flexGrow: 1 }}>
               <DataGrid
                 rows={projects}
                 columns={columns}
