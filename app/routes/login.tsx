@@ -9,7 +9,7 @@ import {
 } from 'remix';
 import { AuthorizationError } from 'remix-auth';
 import { Token } from 'simple-oauth2';
-import Login from '~/components/Login';
+import Login from '~/components/login';
 import { authenticator } from '~/services/auth';
 
 export const loader: LoaderFunction = async ({ request }) => {

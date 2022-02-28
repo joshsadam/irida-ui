@@ -31,7 +31,7 @@ export default function Login({ errors, busy }: LoginProps) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign in to IRIDA
         </Typography>
         <Box component={Form} method="post" sx={{ mt: 1 }}>
           {errors && (
@@ -44,7 +44,7 @@ export default function Login({ errors, busy }: LoginProps) {
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="username"
             label="Username"
             name="username"
             autoComplete="username"
