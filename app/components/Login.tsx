@@ -1,15 +1,14 @@
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Form, Link } from 'remix';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { Form } from 'remix';
 
 type LoginProps = {
   errors?: boolean;
@@ -49,7 +48,6 @@ export default function Login({ errors, busy }: LoginProps) {
             label="Username"
             name="username"
             autoComplete="username"
-            autoFocus
           />
           <TextField
             margin="normal"
@@ -70,32 +68,8 @@ export default function Login({ errors, busy }: LoginProps) {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link to="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>
   );
-
-  // return (
-  //   <Form method="post">
-  //
-  //     <div>
-  //       <label htmlFor="username">Username</label>
-  //       <input type="text" name="username" required />
-  //     </div>
-  //     <div>
-  //       <label htmlFor="password">Password</label>
-  //       <input type="password" name="password" required />
-  //     </div>
-  //     <button type="submit" name="_action" value="login" disabled={busy}>
-  //       Login
-  //     </button>
-  //   </Form>
-  // );
 }
