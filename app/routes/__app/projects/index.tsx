@@ -10,7 +10,7 @@ import {
   useNavigate,
 } from 'remix';
 import { Token } from 'simple-oauth2';
-import { ProjectsTable } from '~/components/projects-table';
+import ProjectsTable from '~/components/projects-table';
 import Title from '~/components/Title';
 import client from '~/services/apollo-client';
 import { authenticator } from '~/services/auth';
