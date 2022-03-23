@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import { LoaderFunction, Outlet, redirect, useLoaderData } from 'remix';
 import Dashboard from '~/components/main-layout';
 import client from '~/services/apollo-client';
-import { authenticator } from '~/services/auth';
+import authenticator from '~/services/auth.server';
 
 export const VIEWER_QUERY = gql`
   query VIEWER_QUERY {

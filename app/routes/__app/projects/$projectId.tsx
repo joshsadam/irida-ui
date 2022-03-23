@@ -4,7 +4,7 @@ import { redirect, useLoaderData, useParams } from 'remix';
 import type { Token } from 'simple-oauth2';
 import Title from '~/components/Title';
 import client from '~/services/apollo-client';
-import { authenticator } from '~/services/auth';
+import authenticator from '~/services/auth.server';
 import type { Project } from '~/types';
 
 interface GraphqlResponse {
@@ -31,9 +31,6 @@ const PROJECT_QUERY = gql`
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const token: Token | null = await authenticator.isAuthenticated(request);
-  if (token === null) {
-    return redirect('/login');
-  }
   // TODO: This is not yet implemented in IRIDA
 
   // const response: GraphqlResponse = await client.query({

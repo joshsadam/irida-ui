@@ -1,16 +1,14 @@
 import {
   ActionFunction,
-  json,
   LoaderFunction,
   MetaFunction,
   redirect,
   useActionData,
   useTransition,
 } from 'remix';
-import { AuthorizationError } from 'remix-auth';
 import { Token } from 'simple-oauth2';
 import Login from '~/components/login';
-import { authenticator } from '~/services/auth';
+import authenticator from '~/services/auth.server';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const token: Token | null = await authenticator.isAuthenticated(request);
@@ -23,18 +21,12 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export const action: ActionFunction = async ({ request, context }) => {
-  try {
-    await authenticator.authenticate('form', request, {
-      successRedirect: '/',
-      throwOnError: true,
-      context,
-    });
-  } catch (e) {
-    if (e instanceof AuthorizationError) {
-      return json({ error: true });
-    }
-    return e;
-  }
+  return await authenticator.authenticate('form', request, {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    throwOnError: true,
+    context,
+  });
 };
 
 export const meta: MetaFunction = () => {
@@ -42,10 +34,10 @@ export const meta: MetaFunction = () => {
 };
 
 export default function LoginPage() {
-  const errors = useActionData();
+  const loaderData = useActionData();
   const transition = useTransition();
 
   const busy = typeof transition.submission === 'object';
 
-  return <Login errors={errors} busy={busy} />;
+  return <Login errors={loaderData?.error} busy={busy} />;
 }

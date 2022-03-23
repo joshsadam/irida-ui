@@ -5,7 +5,7 @@ import { ActionFunction, Form, redirect, useTransition } from 'remix';
 import { Token } from 'simple-oauth2';
 import Title from '~/components/Title';
 import client from '~/services/apollo-client';
-import { authenticator } from '~/services/auth';
+import authenticator from '~/services/auth.server';
 
 const CREATE_PROJECT_MUTATION = gql`
   mutation CREATE_PROJECT_MUTATION($project: ProjectInput) {
@@ -17,9 +17,7 @@ const CREATE_PROJECT_MUTATION = gql`
 
 export const action: ActionFunction = async ({ request }) => {
   const token: Token | null = await authenticator.isAuthenticated(request);
-  if (token === null) {
-    return redirect('/login');
-  }
+
   const formData = await request.formData();
   const { _action, ...values } = Object.fromEntries(formData);
 

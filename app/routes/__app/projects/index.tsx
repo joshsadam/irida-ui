@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import {
   LoaderFunction,
   MetaFunction,
-  redirect,
   useLoaderData,
   useNavigate,
 } from 'remix';
@@ -13,7 +12,7 @@ import { Token } from 'simple-oauth2';
 import ProjectsTable from '~/components/projects-table';
 import Title from '~/components/Title';
 import client from '~/services/apollo-client';
-import { authenticator } from '~/services/auth';
+import authenticator from '~/services/auth.server';
 import { Project } from '~/types';
 
 const ALL_PROJECTS_QUERY = gql`
@@ -40,9 +39,7 @@ interface GraphqlResponse {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const token: Token | null = await authenticator.isAuthenticated(request);
-  if (token === null) {
-    return redirect('/login');
-  }
+
   const response: GraphqlResponse = await client.query({
     query: ALL_PROJECTS_QUERY,
     context: {

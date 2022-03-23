@@ -11,8 +11,4 @@ export const sessionStorage = createCookieSessionStorage({
   },
 });
 
-export function getSession(request: Request): Promise<Session> {
-  return sessionStorage.getSession(request.headers.get('Cookie'));
-}
-
-export const { commitSession, destroySession } = sessionStorage;
+export const { getSession, commitSession, destroySession } = sessionStorage;
